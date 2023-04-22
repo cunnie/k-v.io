@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: k-v.io key-value store API definition
+  version: 0.0.1
+servers:
+- url: /
+paths:
+  /v0/key/{key}:
+    get:
+      summary: Retrieve a key's value
+      description: Retrieve a key's value
+      responses:
+        "200":
+          $ref: '#/components/responses/OK'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+    put:
+      summary: Set (or create) a key's value
+      description: Set (or create) a key's value
+      responses:
+        "204":
+          $ref: '#/components/responses/NoContent'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+    delete:
+      summary: Delete a key and value
+      description: Delete a key and value
+      responses:
+        "204":
+          $ref: '#/components/responses/NoContent'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+    parameters:
+    - $ref: '#/components/parameters/keyParam'
+components:
+  schemas:
+    key:
+      maxLength: 1023
+      minLength: 1
+      description: This is the key used to lookup the value
+    value:
+      maxLength: 1023
+      minLength: 0
+      description: This is the value associated with the key
+  responses:
+    OK:
+      description: OK
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: The key's value
+    NoContent:
+      description: No Content
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: A descriptive error message
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: A descriptive error message
+    ServiceUnavailable:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: A descriptive error message
+  parameters:
+    keyParam:
+      name: key
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/key'

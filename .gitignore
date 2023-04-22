@@ -17,3 +17,5 @@
 .vscode
 # All the swagger stuff
 .swagger*
+# I don't need the swagger Dockerfile
+Dockerfile
