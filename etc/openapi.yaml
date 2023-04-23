@@ -1,7 +1,8 @@
 openapi: 3.1.0
 info:
   title: k-v.io key-value store API definition
-  version: 0.0.1
+  version: 0.0.2
+  description: A REST-based key-value store built with Golang layered on etcd
 paths:
   "/v0/key/{key}":
     parameters:
@@ -45,13 +46,23 @@ components:
       minLength: 1
       maxLength: 1023
       description:
-        This is the key used to lookup the value
+        The key used to lookup the value
+      examples:
+        sshPubkey:
+          value: "OpenSSH public key"
+        softwareVersion:
+          value: "Microsoft Windows"
     value:
       type: string
       minLength: 0 # You can have a null value
       maxLength: 1023
       description:
-        This is the value associated with the key
+        The value associated with the key
+      examples:
+        sshPubkey:
+          value: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIWiAzxc4uovfaphO0QVC2w00YmzrogUpjAzvuqaQ9tD cunnie@nono.io"
+        softwareVersion:
+          value: "Windows 11 Pro 22H2 OS build 22598.1"
   parameters:
     keyParam:
       name: key
@@ -82,6 +93,8 @@ components:
                 message:
                   type: string
                   description: A descriptive error message
+            example:
+              message: No value associated with key; the key has been deleteed or hasn't been set yet
       BadRequest:
         description: Bad Request
         content:
@@ -92,6 +105,8 @@ components:
                 message:
                   type: string
                   description: A descriptive error message
+            example:
+              message: Key exceeds 1023 characters; use a shorter key
       ServiceUnavailable:
         description: Service Unavailable
         content:
@@ -102,3 +117,5 @@ components:
                 message:
                   type: string
                   description: A descriptive error message
+            example:
+              message: Could not communicate with the etcd cluster
