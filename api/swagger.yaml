@@ -1,7 +1,8 @@
 openapi: 3.1.0
 info:
   title: k-v.io key-value store API definition
-  version: 0.0.1
+  description: A REST-based key-value store built with Golang layered on etcd
+  version: 0.0.2
 servers:
 - url: /
 paths:
@@ -45,11 +46,13 @@ components:
     key:
       maxLength: 1023
       minLength: 1
-      description: This is the key used to lookup the value
+      description: The key used to lookup the value
+      example: Microsoft_Windows_Version
     value:
       maxLength: 1023
       minLength: 0
-      description: This is the value associated with the key
+      description: The value associated with the key
+      example: Windows 11 Pro 22H2 OS build 22598.1
   responses:
     OK:
       description: OK
@@ -59,6 +62,8 @@ components:
             properties:
               message:
                 description: The key's value
+          example:
+            value: Windows 11 Pro 22H2 OS build 22598.1
     NoContent:
       description: No Content
     NotFound:
@@ -69,6 +74,9 @@ components:
             properties:
               message:
                 description: A descriptive error message
+          example:
+            message: No value associated with key; the key has been deleteed or hasn't
+              been set yet
     BadRequest:
       description: Bad Request
       content:
@@ -77,6 +85,8 @@ components:
             properties:
               message:
                 description: A descriptive error message
+          example:
+            message: Key exceeds 1023 characters; use a shorter key
     ServiceUnavailable:
       description: Service Unavailable
       content:
@@ -85,6 +95,8 @@ components:
             properties:
               message:
                 description: A descriptive error message
+          example:
+            message: Could not communicate with the etcd cluster
   parameters:
     keyParam:
       name: key
