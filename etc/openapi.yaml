@@ -47,22 +47,14 @@ components:
       maxLength: 1023
       description:
         The key used to lookup the value
-      examples:
-        sshPubkey:
-          value: "OpenSSH public key"
-        softwareVersion:
-          value: "Microsoft Windows"
+      example: "Microsoft_Windows_Version"
     value:
       type: string
       minLength: 0 # You can have a null value
       maxLength: 1023
       description:
         The value associated with the key
-      examples:
-        sshPubkey:
-          value: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIWiAzxc4uovfaphO0QVC2w00YmzrogUpjAzvuqaQ9tD cunnie@nono.io"
-        softwareVersion:
-          value: "Windows 11 Pro 22H2 OS build 22598.1"
+      example: "Windows 11 Pro 22H2 OS build 22598.1"
   parameters:
     keyParam:
       name: key
@@ -81,6 +73,8 @@ components:
                 message:
                   type: value
                   description: The key's value
+            example:
+              value: Windows 11 Pro 22H2 OS build 22598.1
       NoContent:
         description: No Content
       NotFound:
