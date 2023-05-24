@@ -12,7 +12,7 @@ import (
 	"log"
 	"net/http"
 
-	sw "github.com/cunnie/k-v.io/go"
+	sw "github.com/cunnie/k-v.io/kvio"
 )
 
 func main() {
